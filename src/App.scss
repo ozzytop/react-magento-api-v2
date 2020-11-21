@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+@import "./scss/variables.scss";
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +33,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App .navbar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.App .login-screen{
+    height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

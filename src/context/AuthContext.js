@@ -7,7 +7,7 @@ class AuthContextProvider extends Component {
 
     state = { 
         isAuthenticated: false,
-        username: '',
+        username: localStorage.getItem('mg-username'),
         password: '',
         url: 'http://local.chemcentral.com',
         token:  localStorage.getItem('mg-admin-token'),
@@ -25,6 +25,7 @@ class AuthContextProvider extends Component {
     
     signOut = () => {
         localStorage.setItem('mg-admin-token', '');
+        localStorage.setItem('mg-username', '');
         this.setState({ token: ''});
     }
 
@@ -40,7 +41,10 @@ class AuthContextProvider extends Component {
         this.setState({ password});
     }
     
-    authenticate = () => {
+    authenticate = (e) => {
+        if (e.key === 'Enter') {
+            console.log('enter');
+        }
         this.setState({
             spinner: true
         })
@@ -65,12 +69,13 @@ class AuthContextProvider extends Component {
                 spinner: false
             });
             localStorage.setItem('mg-admin-token', response.data);
+            localStorage.setItem('mg-username', this.state.username);
         })
         .catch((err) => {
             this.setState({
                 spinner: false,
                 error: true,
-                message: err.message
+                message: err.response.data.message
             });
             setTimeout(function(){
                 this.setState({error:false});

@@ -1,10 +1,11 @@
-import './App.css';
+import './App.scss';
 import AuthContextProvider from './context/AuthContext';
 import Auth from './components/Auth';
 import MainContent from './components/MainContent';
 import ThemeContextProvider from './context/ThemeContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container } from 'reactstrap';
+import { Container, Navbar, NavbarBrand, NavbarText } from 'reactstrap';
+import Links from './components/Navbar/Links';
 
 
 function App() {
@@ -13,12 +14,16 @@ function App() {
 
     return (
         <div className="App">
-            <Container>
-                <AuthContextProvider value={user}>
-                    <Auth></Auth>
-                    <MainContent></MainContent>
-                </AuthContextProvider>
-            </Container>
+            <AuthContextProvider value={user}>
+                <Navbar color="light" light expand="md">
+                    <NavbarBrand href="/">Mg Api</NavbarBrand>
+                    <Links></Links>
+                </Navbar>
+                <Container>
+                        <Auth></Auth>
+                        <MainContent></MainContent>
+                </Container>
+            </AuthContextProvider>
         </div>
     );
 }
