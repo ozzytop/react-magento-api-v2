@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import AuthContextProvider from './context/AuthContext';
+import Auth from './components/Auth';
+import MainContent from './components/MainContent';
+import ThemeContextProvider from './context/ThemeContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'reactstrap';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    
+    const user = { name: 'Mati', loggedIn: true }
+
+    return (
+        <div className="App">
+            <Container>
+                <AuthContextProvider value={user}>
+                    <Auth></Auth>
+                    <MainContent></MainContent>
+                </AuthContextProvider>
+            </Container>
+        </div>
+    );
 }
 
 export default App;
