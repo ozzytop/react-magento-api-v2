@@ -35,4 +35,4 @@ If you wanna run this application on your local:
 1) Make a better UI
 2) Use states of components GetCurrency and Create Product from context
 3) Create a way to make the api calls from just one place
-4) ~~ use less or sass, center the login doin calc() ~~
+4) <del>use less or sass, center the login doin calc()</del>
