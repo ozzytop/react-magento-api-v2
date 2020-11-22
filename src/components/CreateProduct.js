@@ -16,23 +16,31 @@ import {
     Card,
     CardBody
 } from 'reactstrap';
+import AuthContext from '../context/AuthContext';
 
 class CreateProduct extends Component {
-
+    
+    static contextType = AuthContext;
 
     constructor(props){
         super(props);
         this.state = {
-            url: 'http://local.chemcentral.com',
+            url: '',
             id: 0,
             message: true,
+            messages: [],
             allowed: false,
             showSuccess: false,
             spinner:false,
             open:true,
             fields: {},
-
+            error:false
         }
+    }
+
+    componentDidMount() {
+        const context = this.context;
+        this.setState({ url: context.url });
     }
 
     toggle() {
@@ -42,13 +50,15 @@ class CreateProduct extends Component {
     }
 
     createProduct() {
-        debugger;
+
         this.setState({
             spinner: true
         })
 
         if(!this.handleValidation()){
-            alert("Form has errors.");
+            this.setState({
+                spinner: false
+            })
             return false;
          }
 
@@ -60,12 +70,11 @@ class CreateProduct extends Component {
             }
         };
         
-        debugger;
         var data = JSON.stringify({
             'product': {
                 'sku': this.state.fields['sku'], 
                 'name': this.state.fields['name'],
-                'weight': parseInt(this.state.fields['weight']),
+                'weight': this.state.fields['weight'],
                 'price': parseInt(this.state.fields['price']),
                 'status': this.state.fields['status'],
                 'visibility': this.state.fields['visibility'],
@@ -80,7 +89,6 @@ class CreateProduct extends Component {
         const url = `${this.state.url}/rest/default/V1/products`;
         axios.post(url, data, axiosConfig)
         .then((response) => {
-            
             console.log(response);
             this.setState({
                 spinner: false,
@@ -91,12 +99,11 @@ class CreateProduct extends Component {
 
         })
         .catch((err) => {
-            debugger;
             console.log(err);
             this.setState({
                 spinner: false,
                 error: true,
-                message: err.message
+                message: err.response.data
             });
 
         });
@@ -105,15 +112,25 @@ class CreateProduct extends Component {
 
     handleValidation() {
         let fields = this.state.fields;
-        let errors = {};
+        let errors = [];
         let formIsValid = true;
 
-        //Name
+        // Name
         if(!fields["name"]){
            formIsValid = false;
-           errors["name"] = "Cannot be empty";
+           errors.push({error:"Name can not be empty."});
         }
-        this.setState({errors: errors});
+        // Sku
+        if(!fields["sku"]){
+           formIsValid = false;
+           errors.push();
+           errors.push({error:"Sku can not be empty."});
+        }
+        
+        if(formIsValid == false){
+            this.setState({error: true, messages: errors});    
+        }
+        
         return formIsValid;
     }
 
@@ -127,7 +144,7 @@ class CreateProduct extends Component {
     
     render() {
  
-        
+        const { token } = this.context;
       return ( 
         
         <div>
@@ -217,6 +234,13 @@ class CreateProduct extends Component {
                                                 Name of the product: {this.state.fields['name']}    
                                             </p>
                                             
+                                        </Alert>
+                                        <Alert style={{ display: this.state.error ? "block" : "none" }} color="danger">
+                                            <p>Error:</p>
+                                            { this.state.messages.map((message, index) => {
+                                                <p>Hola {message}</p>
+                                                {console.log(message)}
+                                            })}
                                         </Alert>
                                     </Form>
                                 </Col>

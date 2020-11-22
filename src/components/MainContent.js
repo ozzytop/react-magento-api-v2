@@ -1,8 +1,16 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import Home from './Home';
 import CreateProduct from './CreateProduct';
 import GetCurrency from './GetCurrency';
-
+import GetWebsites from './GetWebsites';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { Container, Row, Col } from 'reactstrap';
 
 const MainContent = () => {
     
@@ -13,8 +21,40 @@ const MainContent = () => {
             { token 
             ?
                 <React.Fragment>            
-                    <GetCurrency></GetCurrency>
-                    <CreateProduct></CreateProduct>
+                    <Router>
+                        <Row>
+                            <Col xs="3" className="sidebar">
+                                <ul className="sidebar__links">
+                                    <li>
+                                    <Link to="/">Home</Link>
+                                    </li>
+                                    <li>
+                                    <Link to="/getcurrency">Get Currency</Link>
+                                    </li>
+                                    <li>
+                                    <Link to="/get-websites">Get Websites</Link>
+                                    </li>
+                                    <li>
+                                    <Link to="/createproducts">Create a Product </Link>
+                                    </li>
+                                </ul>
+                            </Col>
+                            <Col xs="9">
+                                <Switch>
+                                    <Route path="/getcurrency">
+                                        <GetCurrency />
+                                    </Route>
+
+                                    <Route path="/createproducts">
+                                        <CreateProduct />
+                                    </Route>
+                                    <Route path="/">
+                                        <Home />
+                                    </Route>
+                                </Switch>
+                            </Col>
+                        </Row>
+                    </Router>
                 </React.Fragment>
             :
                 <div></div>

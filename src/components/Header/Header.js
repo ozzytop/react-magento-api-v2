@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Button, Navbar, NavbarBrand, NavbarText  } from 'reactstrap';
 import Links from './Links';
+import logo from '../../assets/m2.png';
 
 const Header = () => {
 
@@ -12,7 +13,7 @@ const Header = () => {
             { token   
             ?
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">Mg Api</NavbarBrand>
+                    <NavbarBrand href="/"><img src={logo} alt="Logo" style={{ width:"50px" }} /></NavbarBrand>
                     <Links></Links>
                 </Navbar>
 

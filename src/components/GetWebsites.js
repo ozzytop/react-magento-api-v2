@@ -18,15 +18,15 @@ import {
 } from 'reactstrap';
 import AuthContext from '../context/AuthContext';
 
-class GetCurrency extends Component {
 
+export default class GetWebsites extends Component {
+    
     static contextType = AuthContext;
     
     constructor(props){
         super(props);
-        
         this.state = {
-            url: '',
+            url: 'http://local.chemcentral.com',
             message: true,
             allowed: false,
             showSuccess: false,
@@ -34,23 +34,18 @@ class GetCurrency extends Component {
             open:false
         }
     }
-    
-    componentDidMount() {
-        const context = this.context;
-        this.setState({ url: context.url });
-    }
 
     toggle() {
         this.setState({
             open: !this.state.open
         })
     }
-
-    getCurrency() {
+    
+    getData() {
         this.setState({
             spinner:true
         })
-        const url = `${this.state.url}/rest/V1/directory/currency`;
+        const url = `${this.state.url}${this.props.url}`;
         axios.get(url)
         .then((response) => {
             console.log(response.data);
@@ -61,11 +56,15 @@ class GetCurrency extends Component {
             })
         });
     }
-    
+
     render() {
-      return (  
-        <div>
-            <Button color="primary" onClick={() => this.toggle()} style={{ marginBottom: '1rem' }}> <FaChevronDown /> Get Currency Information</Button>
+        
+        const { url } = this.context;
+        
+        return (
+            <div>
+            {url}
+            <Button color="primary" onClick={() => this.toggle()} style={{ marginBottom: '1rem' }}> <FaChevronDown /> Get {this.props.name} Information</Button>
             <Collapse
                 isOpen={this.state.open}>
                 <Card>
@@ -73,12 +72,12 @@ class GetCurrency extends Component {
                         <Container fluid="md">
                             <Row>
                                 <Col xs={8}>
-                                    <Button variant="primary" onClick={() => this.getCurrency()} style={{ marginBottom: '1rem', marginRight: '10px' }}>
-                                        Get Currency
+                                    <Button variant="primary" onClick={() => this.getData()} style={{ marginBottom: '1rem', marginRight: '10px' }}>
+                                        Get {this.props.name}
                                     </Button>
                                     <Spinner style={{ width: '2rem', height: '2rem' , display: this.state.spinner ? "inline-block" : "none"}} />
                                     <Alert style={{ display: this.state.showSuccess ? "block" : "none" }} color="success">
-                                        Curreny retrieved successfully.
+                                        {this.props.name} retrieved successfully.
                                     </Alert>
                                     <div>
                                         Currency Code: {this.state.baseCurrencyCode}
@@ -90,8 +89,6 @@ class GetCurrency extends Component {
                 </Card>
             </Collapse>
         </div>
-      );
+        )
     }
 }
-
-export default GetCurrency;

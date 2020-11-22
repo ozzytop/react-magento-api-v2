@@ -12,7 +12,7 @@ import {
     Alert,
     Spinner
 } from 'reactstrap';
-import logo from '../assets/m2.png'; // Tell webpack this JS file uses this image
+import logo from '../assets/m2.png';
 
 
 const Auth = () => {
