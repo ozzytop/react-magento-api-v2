@@ -238,8 +238,7 @@ class CreateProduct extends Component {
                                         <Alert style={{ display: this.state.error ? "block" : "none" }} color="danger">
                                             <p>Error:</p>
                                             { this.state.messages.map((message, index) => {
-                                                <p>Hola {message}</p>
-                                                {console.log(message)}
+                                                return <div>{message.error}</div>
                                             })}
                                         </Alert>
                                     </Form>
