@@ -4,13 +4,14 @@ import Home from './Home';
 import CreateProduct from './CreateProduct';
 import GetCurrency from './GetCurrency';
 import GetWebsites from './GetWebsites';
+import ProductDetail from './Store/ProductDetail';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 const MainContent = () => {
     
@@ -44,9 +45,14 @@ const MainContent = () => {
                                     <Route path="/getcurrency">
                                         <GetCurrency />
                                     </Route>
-
+                                    <Route path="/get-websites">
+                                        <GetWebsites />
+                                    </Route>
                                     <Route path="/createproducts">
                                         <CreateProduct />
+                                    </Route>
+                                    <Route path="/product-detail/:id">
+                                        <ProductDetail />
                                     </Route>
                                     <Route path="/">
                                         <Home />

@@ -15,7 +15,8 @@ function App() {
     return (
         <div className="App">
             <AuthContextProvider value={user}>
-                <Header></Header>
+                <Header>
+                </Header>
                 <div className="login-wrapper">
                     <Auth className="login-wrapper"></Auth>
                 </div>

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Button } from 'reactstrap';
+import { Link, Router } from "react-router-dom";
 const Links = () => {
 
     const { token, username , signOut} = useContext(AuthContext);
@@ -14,8 +15,8 @@ const Links = () => {
                     <a href="#" variant="primary" onClick={signOut} style={{ marginBottom: '1rem', marginRight: '10px' }}>
                         Sign Out
                     </a>
+                    
                 </div>
-
             :
                 <div>
                     <span>Please Sign In</span>    
